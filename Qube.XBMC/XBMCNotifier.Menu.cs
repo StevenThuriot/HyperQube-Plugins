@@ -86,7 +86,7 @@ namespace Qube.XBMC
                 else
                 {
                     _useHyperIcon = false;
-                    await _configurationProvider.RemoveAsync(HyperIconUri);
+                    _hyperIconUri = null;
                 }
 
                 _ip = ipQuestion.Result;
@@ -103,8 +103,13 @@ namespace Qube.XBMC
                                {UseHyperIcon, _useHyperIcon.ToString()}
                            };
 
-                if (_useHyperIcon)
+                if (!_useHyperIcon || _hyperIconUri == null)
                 {
+                    kvps.Add(UseHyperIcon, false.ToString());
+                }
+                else
+                {
+                    kvps.Add(UseHyperIcon, true.ToString());
                     kvps.Add(HyperIconUri, _hyperIconUri.ToString());
                 }
 
@@ -135,8 +140,7 @@ namespace Qube.XBMC
             _useHyperIcon = string.IsNullOrWhiteSpace(useHyperIcon) || (bool.TryParse(useHyperIcon, out parsedUsage) && parsedUsage);
             
             Uri uri;
-            if (Uri.TryCreate(values[HyperIconUri], UriKind.Absolute, out uri))
-                _hyperIconUri = uri;
+            _hyperIconUri = Uri.TryCreate(values[HyperIconUri], UriKind.Absolute, out uri) ? uri : null;
         }
     }
 }

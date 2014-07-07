@@ -49,7 +49,7 @@ namespace Qube.XBMC
             parameters.title = CreateTitle(json);
             parameters.message = CreateMessage(json);
 
-            if (_useHyperIcon)
+            if (_useHyperIcon && _hyperIconUri != null)
             {
                 var icon = ((dynamic) json).icon;
                 if (icon != null)
@@ -62,7 +62,6 @@ namespace Qube.XBMC
                             webClient.UseDefaultCredentials = true;
                             webClient.Proxy = WebRequest.DefaultWebProxy;
 
-                            //TODO: Do we need to strip \n from the image?
                             var id = await webClient.UploadStringTaskAsync(_hyperIconUri, image);
                             var imageUri = new Uri(_hyperIconUri, id).ToString();
 

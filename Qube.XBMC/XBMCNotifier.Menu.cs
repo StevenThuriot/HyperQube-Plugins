@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using HyperQube.Library;
 using HyperQube.Library.Questions;
 using Qube.XBMC.Questions;
@@ -123,23 +122,20 @@ namespace Qube.XBMC
 
         private async void Initialize()
         {
-            var values = (await _configurationProvider.GetValuesAsync(Ip, Port, CutAndroidAmount, User, UseHyperIcon, HyperIconUri))
-                                                      .ToList();
+            var values = await _configurationProvider.GetValuesAsync(Ip, Port, CutAndroidAmount, User, UseHyperIcon, HyperIconUri);
 
-            _ip = values[0];
-            _port = values[1];
-            bool.TryParse(values[2], out _cutAndroidAmount);
-            _user = values[3];
+            _ip = values[Ip];
+            _port = values[Port];
+            bool.TryParse(values[CutAndroidAmount], out _cutAndroidAmount);
+            _user = values[User];
 
-            var useHyperIcon = values[4];
+            var useHyperIcon = values[UseHyperIcon];
+
             bool parsedUsage;
-            _useHyperIcon = string.IsNullOrWhiteSpace(useHyperIcon) ||
-                            (bool.TryParse(values[4] ?? "True", out parsedUsage) && parsedUsage);
-
-            bool.TryParse(values[4] ?? "True", out _useHyperIcon);
-
+            _useHyperIcon = string.IsNullOrWhiteSpace(useHyperIcon) || (bool.TryParse(useHyperIcon, out parsedUsage) && parsedUsage);
+            
             Uri uri;
-            if (Uri.TryCreate(values[5], UriKind.Absolute, out uri))
+            if (Uri.TryCreate(values[HyperIconUri], UriKind.Absolute, out uri))
                 _hyperIconUri = uri;
         }
     }

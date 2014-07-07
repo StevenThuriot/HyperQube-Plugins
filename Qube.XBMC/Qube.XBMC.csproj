@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="HyperQube.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HyperQube.Library.1.0.0\lib\net45\HyperQube.Library.dll</HintPath>
+      <HintPath>..\packages\HyperQube.Library.1.0.1\lib\net45\HyperQube.Library.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>

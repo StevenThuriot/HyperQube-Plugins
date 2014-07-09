@@ -62,10 +62,16 @@ namespace Qube.XBMC
                             webClient.UseDefaultCredentials = true;
                             webClient.Proxy = WebRequest.DefaultWebProxy;
 
-                            var id = await webClient.UploadStringTaskAsync(_hyperIconUri, image);
-                            var imageUri = new Uri(_hyperIconUri, id).ToString();
-
-                            parameters.image = imageUri;
+                            try
+                            {
+                                var id = await webClient.UploadStringTaskAsync(_hyperIconUri, image);
+                                var imageUri = new Uri(_hyperIconUri, id).ToString();
+                                parameters.image = imageUri;
+                            }
+                            catch (WebException exception)
+                            {
+                                TraceException(exception);
+                            }
                         }
                     }
                 }

@@ -66,11 +66,16 @@ namespace Qube.XBMC
             }
             catch (WebException exception)
             {
-                var message = string.Format(CultureInfo.CurrentCulture, "{0} ( {1} )", exception.Message, exception.Status);
-
-                _outputProvider.TraceError(message);
-                _outputProvider.Write("XBMC Server", message, QubeIcon.Error);
+                TraceException(exception);
             }
+        }
+
+        private void TraceException(WebException ex)
+        {
+            _outputProvider.TraceError(ex.ToString());
+
+            var message = string.Format(CultureInfo.CurrentCulture, "{0} ( {1} )", ex.Message, ex.Status);
+            _outputProvider.Write("XBMC Server", message, QubeIcon.Error);
         }
     }
 }
